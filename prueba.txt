@@ -1,7 +1,8 @@
-BEGIN-OF-PROGRAM
+ BEGIN-OF-PROGRAM
 	BEGIN-OF-EXECUTION
 		turnleft;
 		move;
+		turnright;
 		pickbeeper;
 		putbeeper;
 		turnoff

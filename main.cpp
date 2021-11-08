@@ -7,7 +7,7 @@
 
  
 int main () {
- 
+
   std::fstream newfile;
    
   newfile.open("prueba.txt",std::ios::in); //open a file to perform read operation using file object
@@ -17,6 +17,7 @@ int main () {
         identifier(tp);  
       }
       newfile.close();   //close the file object.
-   }	
+   }
+
    return 0;
 }
