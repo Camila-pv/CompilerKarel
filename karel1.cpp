@@ -20,15 +20,30 @@ void identifier(std::string s){
       s.pop_back();
     s.pop_back();
     identifier(s);
+  }else if(regex_match (s, std::regex("([\\s]*)([a-z]*)([\\s]*)([0-9]+)([\\s]*)"))){
+    std::cout<<"imprimir "<<s<<"\n";
+    std::string space = " ";
+    std::vector<std::string>words{};
+    int pos = 0;
+    while((pos = s.find(space)) != std::string::npos){
+      words.push_back(s.substr(0,pos));
+      s.erase(0,pos+space.length());
+    }
+    while(words.empty()!= 1){
+      for(int i = 0; i < words.size() ; i++){
+	for(it = mymap.begin(); it != mymap.end(); it++){
+	  if(regex_match (words[i], std::regex(it->second)))
+	    std::cout << "string:" << words[i]<< " => "<< it->first << "\n";
+	}
+      }
+    }
   }else{
     for(it = mymap.begin(); it != mymap.end(); it++){
-      if(regex_match (s, std::regex(it->second)))
-	std::cout << "string:" << s << " => "<< it->first << "\n";
-      
+	  if(regex_match (s, std::regex(it->second)))
+	    std::cout << "string:" << s<< " => "<< it->first << "\n";
     }
   }
 }
-
 
  /**
   }else if(regex_match (s, std::regex("([\\s]*)([A-Z]*)([0-9]+)([a-z]*)([\\s]*)"))){
