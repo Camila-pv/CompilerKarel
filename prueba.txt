@@ -1,8 +1,8 @@
- BEGIN-OF-PROGRAM
+BEGIN-OF-PROGRAM
+	ITERATE 3 TIMES
 	BEGIN-OF-EXECUTION
 		turnleft;
 		move;
-		turnright;
 		pickbeeper;
 		putbeeper;
 		turnoff

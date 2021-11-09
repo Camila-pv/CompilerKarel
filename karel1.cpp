@@ -3,8 +3,8 @@ void identifier(std::string s){
   std::map<std::string,std::string> mymap;
   std::map<std::string,std::string>::iterator it;
 
-  mymap["Keyword"] = "([\\s]*)(DEFINE-NEW-INSTRUCTION)([\\s]*)|([\\s]*)(AS)([\\s]*)|([\\s]*)(IF)([\\s]*)|([\\s]*)(THEN)([\\s]*)|([\\s]*)(ELSE)([\\s]*)|([\\s]*)(ITETATE)([\\s]*)|([\\s]*)(WHILE)([\\s]*)";
-
+  mymap["Keyword"] = "([\\s]*)(DEFINE-NEW-INSTRUCTION)([\\s]*)|([\\s]*)(AS)([\\s]*)|([\\s]*)(IF)([\\s]*)|([\\s]*)(THEN)([\\s]*)|([\\s]*)(ELSE)([\\s]*)|([\\s]*)(ITERATE)([\\s]*)|([\\s]*)(WHILE)([\\s]*)|([\\s]*)(TIMES)([\\s]*)";
+  
   mymap["Instructions"] = "([\\s]*)(move)|([\\s]*)(turnleft)|([\\s]*)(turnoff)|([\\s]*)(putbeeper)|([\\s]*)(pickbeeper)";
   
   mymap["Delimiter"] = "([\\s]*)(BEGIN-OF-PROGRAM)([\\s]*)|([\\s]*)(BEGIN-OF-EXECUTION)|([\\s]*)(END)|([\\s]*)(BEGIN)|([\\s]*)(END-OF-PROGRAM)|([\\s]*)(END-OF-EXECUTION)";
@@ -20,8 +20,7 @@ void identifier(std::string s){
       s.pop_back();
     s.pop_back();
     identifier(s);
-  }else if(regex_match (s, std::regex("([\\s]*)([a-z]*)([\\s]*)([0-9]+)([\\s]*)"))){
-    std::cout<<"imprimir "<<s<<"\n";
+  }else{
     std::string space = " ";
     std::vector<std::string>words{};
     int pos = 0;
@@ -29,34 +28,18 @@ void identifier(std::string s){
       words.push_back(s.substr(0,pos));
       s.erase(0,pos+space.length());
     }
-    while(words.empty()!= 1){
+    words.push_back(s.substr(0,pos-1));
+    
+    
+    int p = 0;
+    while(p != words.size()){
       for(int i = 0; i < words.size() ; i++){
+	p++;
 	for(it = mymap.begin(); it != mymap.end(); it++){
 	  if(regex_match (words[i], std::regex(it->second)))
 	    std::cout << "string:" << words[i]<< " => "<< it->first << "\n";
 	}
       }
     }
-  }else{
-    for(it = mymap.begin(); it != mymap.end(); it++){
-	  if(regex_match (s, std::regex(it->second)))
-	    std::cout << "string:" << s<< " => "<< it->first << "\n";
-    }
   }
 }
-
- /**
-  }else if(regex_match (s, std::regex("([\\s]*)([A-Z]*)([0-9]+)([a-z]*)([\\s]*)"))){
-
-    std::istringstream isstream(s);
-    while(!isstream.eof()){
-
-        std::string tempStr;
-
-        isstream >> tempStr;
-
-        std::cout << tempStr << std::endl;
-    }
-    
-    std::cout<<"hola\n";
-    **/
