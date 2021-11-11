@@ -12,6 +12,8 @@ void identifier(std::string s){
   mymap["Proposition"] = "([\\s]*)(next-to-a-beeper)|([\\s]*)(not-next-to-a-beeper)|([\\s]*)(facing-east)|([\\s]*)(not-facing-east)|([\\s]*)(facing-south)|([\\s]*)(not-facing-south)|([\\s]*)(facing-north)|([\\s]*)(not-facing-north)|([\\s]*)(facing-west)|([\\s]*)(not-facing-west)";
 
   mymap["Number"] = "([\\s]*)([0-9]+)([\\s]*)";
+
+  mymap["Identifier"] = "([\\s]*)([a-z]*)(([0-9]|[a-z]|(-)|(_))+)([\\s]*)";
  
 
   if (regex_match (s, std::regex("([\\s]*)([a-z]*)(;)([\\s]*)") )){
@@ -35,10 +37,16 @@ void identifier(std::string s){
     while(p != words.size()){
       for(int i = 0; i < words.size() ; i++){
 	p++;
+	bool count = true;
 	for(it = mymap.begin(); it != mymap.end(); it++){
-	  if(regex_match (words[i], std::regex(it->second)))
+	  if(regex_match (words[i], std::regex(it->second))){
 	    std::cout << "string:" << words[i]<< " => "<< it->first << "\n";
+	    count = false;
+	    break;
+	  }
 	}
+	if(count == true)
+	  std::cout<< "Error de lexico :"<< words[i] <<"\n";
       }
     }
   }
