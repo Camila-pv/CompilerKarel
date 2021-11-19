@@ -1,5 +1,6 @@
-
+// Función que clasifica cada lexema con un simbolo o un error
 void identifier(std::string s){
+  //Se crea un mapa y apuntador del mismo, donde la llave es el simbolo y el valor es la expresión regular
   std::map<std::string,std::string> mymap;
   std::map<std::string,std::string>::iterator it;
 
@@ -12,15 +13,17 @@ void identifier(std::string s){
   mymap["Proposition"] = "([\\s]*)(next-to-a-beeper)|([\\s]*)(not-next-to-a-beeper)|([\\s]*)(facing-east)|([\\s]*)(not-facing-east)|([\\s]*)(facing-south)|([\\s]*)(not-facing-south)|([\\s]*)(facing-north)|([\\s]*)(not-facing-north)|([\\s]*)(facing-west)|([\\s]*)(not-facing-west)";
 
   mymap["Number"] = "([\\s]*)([0-9]+)([\\s]*)";
-
-  //mymap["Identifier"] = "([\\s]*)([a-z]*)(([0-9]|[a-z]|(-)|(_))+)([\\s]*)";
  
-
+  //Este if entra la linea de caracteres que terminan en ;
   if (regex_match (s, std::regex("([\\s]*)([a-z]*)(;)([\\s]*)") )){
+    // Imprime el simbolo del ;
     std::cout << "string: ;"<<"  => Separator\n";
+    //Borra el; 
     while(s[s.size()-1] != ';')
       s.pop_back();
     s.pop_back();
+
+    //Se crea la variable count donde se inicializa como true paraa saber si el lexema tiene un simbolo o no.
     bool count = true;
     for(it = mymap.begin(); it != mymap.end(); it++){
 	  if(regex_match (s, std::regex(it->second))){
@@ -29,10 +32,13 @@ void identifier(std::string s){
 	    break;
 	  }
 	}
+    // Si el lexema no tiene ningun simbolo, es porque hay un error de léxico
     if(count == true)
       std::cout << "Error de Lexicooooo :"<< s<<"\n";
-    
+
+    //En el esle entran los lexemas que no terminan en ;, es decir que pueden tener mas de un lexema en la linea leida del programa fuente.
   }else{
+    //Se crea un vector para separar cada lexema, se separa por medio de un espacio en blanco
     std::string space = " ";
     std::vector<std::string>words{};
     int pos = 0;
@@ -42,12 +48,13 @@ void identifier(std::string s){
     }
     words.push_back(s.substr(0,pos-1));
     
-    
+    //Se recorre el vector para identificar el simbolo de cada elemento del vector
     int p = 0;
     while(p != words.size()){
       for(int i = 0; i < words.size() ; i++){
 	p++;
 	bool prueba = true;
+	//Se recorre el mapa para encontar la expresion regular
 	for(it = mymap.begin(); it != mymap.end(); it++){
 	  if(regex_match (words[i], std::regex(it->second))){
 	    std::cout << "string:" << words[i]<< " => "<< it->first << "\n";
@@ -55,6 +62,7 @@ void identifier(std::string s){
 	    break;
 	  }
 	}
+	//Si no se encontro el simbolo del lexema es un Identifier y no un error porque no termina en ; y puede ser una"variable"
 	if(prueba == true){
 	  if(regex_match (words[i],std::regex("([\\s]*)([a-z]*)(([0-9]|[a-z]|(-)|(_))+)([\\s]*)")))
 	    std::cout << "string: " << words[i] << " =>  Identifier\n";
