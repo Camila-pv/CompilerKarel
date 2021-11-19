@@ -13,7 +13,7 @@ void identifier(std::string s){
 
   mymap["Number"] = "([\\s]*)([0-9]+)([\\s]*)";
 
-  mymap["Identifier"] = "([\\s]*)([a-z]*)(([0-9]|[a-z]|(-)|(_))+)([\\s]*)";
+  //mymap["Identifier"] = "([\\s]*)([a-z]*)(([0-9]|[a-z]|(-)|(_))+)([\\s]*)";
  
 
   if (regex_match (s, std::regex("([\\s]*)([a-z]*)(;)([\\s]*)") )){
@@ -21,7 +21,17 @@ void identifier(std::string s){
     while(s[s.size()-1] != ';')
       s.pop_back();
     s.pop_back();
-    identifier(s);
+    bool count = true;
+    for(it = mymap.begin(); it != mymap.end(); it++){
+	  if(regex_match (s, std::regex(it->second))){
+	    std::cout << "string:" << s << " => "<< it->first << "\n";
+	    count = false;
+	    break;
+	  }
+	}
+    if(count == true)
+      std::cout << "Error de Lexicooooo :"<< s<<"\n";
+    
   }else{
     std::string space = " ";
     std::vector<std::string>words{};
@@ -37,16 +47,18 @@ void identifier(std::string s){
     while(p != words.size()){
       for(int i = 0; i < words.size() ; i++){
 	p++;
-	bool count = true;
+	bool prueba = true;
 	for(it = mymap.begin(); it != mymap.end(); it++){
 	  if(regex_match (words[i], std::regex(it->second))){
 	    std::cout << "string:" << words[i]<< " => "<< it->first << "\n";
-	    count = false;
+	    prueba = false;
 	    break;
 	  }
 	}
-	if(count == true)
-	  std::cout<< "Error de lexico :"<< words[i] <<"\n";
+	if(prueba == true){
+	  if(regex_match (words[i],std::regex("([\\s]*)([a-z]*)(([0-9]|[a-z]|(-)|(_))+)([\\s]*)")))
+	    std::cout << "string: " << words[i] << " =>  Identifier\n";
+	}
       }
     }
   }
