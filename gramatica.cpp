@@ -5,7 +5,18 @@
 
 bool gram_S(std::string s);
 bool gram_A(std::string s);
+bool gram_E(std::string s);
 bool gramatica(std::string palabra);
+
+/**
+
+GRAMATICA
+
+S -> aAb|b
+A -> bdE|E
+E -> c|a
+
+**/
 
 int main(){
   
@@ -24,13 +35,28 @@ int main(){
 }
 
 bool gram_S(std::string s){
-  if(std::regex_match(s, std::regex("(a)([A-Za-z])*(b)")))
+  if(std::regex_match(s, std::regex("(a)([A-Za-z])*(b)"))){
     return gram_A(s.substr(1, s.length()-2));
-
-  return false;
+  }else if(std::regex_match(s, std::regex("(b)"))){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 bool gram_A(std::string s){
+  if(std::regex_match(s, std::regex("(c)(d)([A-Za-z])*"))){
+    std::string h = s.substr(2, s.length()-1);
+    std::cout<< h<< "...\n";
+    return gram_E(s.substr(2, s.length()-1));
+  }else if(std::regex_match(s, std::regex("([A-Za-z])*"))){
+    return gram_E(s);
+  }else{
+    return false;
+  }
+}
+
+bool gram_E(std::string s){
   if(std::regex_match(s, std::regex("(c)|(a)")))
     return true;
 
@@ -39,26 +65,5 @@ bool gram_A(std::string s){
 
 bool gramatica(std::string palabra){
   return gram_S(palabra);
-  /*
-  std::map<char,std::string> mymap;
-  std::map<std::string,std::string>::iterator it;
-  mymap['S'] = "(aAb)"; // "(a)([a-Z])(b)"
-  mymap['A'] =  "(c)|(a)";
   
-  int count = 1;
-  if(count == 1){
-    std::string w = mymap['S'];
-    for(int i = 0 ; i < w.size(); i++){
-      for(int j = 0; j < palabra.size(); i++){
-	if(minusculas(j) && minusculas(i)){
-	  if(w[i] == palabra[j]){
-	    std::cout<<"entre "<< w[i]<<palabra[j]<<"\n";
-	    break;
-	  }
-	}
-      }
-    }
-  }
-  return true;
-  */
 }
