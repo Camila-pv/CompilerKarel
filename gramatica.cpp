@@ -9,13 +9,16 @@ bool gram_E(std::string s);
 bool gramatica(std::string palabra);
 
 /**
-
 GRAMATICA
-
 S -> aAb|b
 A -> bdE|E
 E -> c|a
-
+Comprobar:
+b      
+abdcb  
+abdab  
+acb    
+aab    
 **/
 
 int main(){
@@ -45,9 +48,7 @@ bool gram_S(std::string s){
 }
 
 bool gram_A(std::string s){
-  if(std::regex_match(s, std::regex("(c)(d)([A-Za-z])*"))){
-    std::string h = s.substr(2, s.length()-1);
-    std::cout<< h<< "...\n";
+  if(std::regex_match(s, std::regex("(b)(d)([A-Za-z])*"))){
     return gram_E(s.substr(2, s.length()-1));
   }else if(std::regex_match(s, std::regex("([A-Za-z])*"))){
     return gram_E(s);
