@@ -1,8 +1,20 @@
 #include<iostream>
 #include<regex>
+#include<string>
+#include<fstream>
+#include<vector>
 
-bool gramatica(std::string g);
-bool gram_start(std::string g);
+bool gramatica(std::vector<std::string> myvec);
+bool gram_start(std::vector<std::string> myvec);
+bool gram_program(std::vector<std::string> myvec);
+bool gram_definition(std::vector<std::string> myvec);
+bool gram_statement(std::vector<std::string> myvec);
+bool gram_block(std::vector<std::string> myvec);
+bool gram_iteration(std::vector<std::string> myvec);
+bool gram_loop(std::vector<std::string> myvec);
+bool gram_conditional(std::vector<std::string> myvec);
+bool instruction(std::vector<std::string> myvec);
+
 
 /**
  GRAMATICA KAREL
@@ -24,27 +36,53 @@ bool gram_start(std::string g);
             | FACING−WEST | NOT−FACING−WEST
  identifier → [ a−z ] ( [ a−z ] | [0−9]+ )∗
  number → [0−9]+
-
 **/
 
 int main(){
-    std::string g = "BEGINNING-OF-PROGRAM turnleft; ITERATE 9 TIMES ED-OF-PROGRAM";
-    if(gramatica(g))
-    std::cout << "Verdadero " << gramatica(g) << std::endl;
-  else
-    std::cout << "Falso " << gramatica(g) << std::endl;
+    std::vector<std::string> myvec;
     
+    std::fstream newfile;
+  //Leer el programa fuente
+  newfile.open("prueba.txt",std::ios::in); //open a file to perform read operation using file object
+   if (newfile.is_open()){   //checking whether the file is open
+     std::string tp;
+      while(getline(newfile, tp)){  //read data from file object and put it into string.
+	//Llamar la función
+        myvec.push_back(tp);  
+      }
+      newfile.close();   //close the file object.
+   }
+
+
+   if(gramatica(myvec))
+    std::cout << "Verdadero " << std::endl;
+  else
+    std::cout << "Falso " << std::endl;
+
+   for(int i = 0; i < myvec.size() ; i++)
+     std::cout << myvec[i]<<" \n";
+   
     return 0;
 }
 
-bool gramatica(std::string g){
-    return gram_start(g);
+bool gramatica(std::vector<std::string> myvec){
+    return gram_start(myvec);
 }
 
 
-bool gram_start(std::string g){
-    if(std::regex_match(g, std::regex("(BEGINNING-OF-PROGRAM)(([\\s])*([A-Za-z])*([0-9])*(;)*)*(END-OF-PROGRAM)")))
-        return true;
-    else
-        return false;
+// BEGINNING Y END ESCRIBIRLA CON REGEX
+// BORRAR PRIMERO Y ULTIMO ELEMENTO DEL VECTOR ORIGINAL
+bool gram_start(std::vector<std::string> myvec){
+  if(myvec[0] == "BEGINNING-OF-PROGRAM" && myvec[myvec.size()-1] == "END-OF-PROGRAM"){
+    myvec.pop_back();
+    std::vector<std::string> myvec2;
+    for(int i = 0; i < myvec.size(); i++)
+      myvec2.push_back(myvec[i]);
+    myvec = myvec2;
+    return true;
+  }else{
+    return false;
+  }
 }
+
+
