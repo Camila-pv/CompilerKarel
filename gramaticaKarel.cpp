@@ -4,8 +4,9 @@
 #include<fstream>
 #include<vector>
 
-bool gramatica(std::vector<std::string> myvec);
-bool gram_start(std::vector<std::string> myvec);
+bool gramatica(std::vector<std::string> &myvec);
+bool gram_start(std::vector<std::string> &myvec);
+/**
 bool gram_program(std::vector<std::string> myvec);
 bool gram_definition(std::vector<std::string> myvec);
 bool gram_statement(std::vector<std::string> myvec);
@@ -15,7 +16,7 @@ bool gram_loop(std::vector<std::string> myvec);
 bool gram_conditional(std::vector<std::string> myvec);
 bool instruction(std::vector<std::string> myvec);
 
-
+**/
 /**
  GRAMATICA KAREL
  
@@ -58,25 +59,21 @@ int main(){
     std::cout << "Verdadero " << std::endl;
   else
     std::cout << "Falso " << std::endl;
-
    for(int i = 0; i < myvec.size() ; i++)
      std::cout << myvec[i]<<" \n";
-   
     return 0;
 }
 
-bool gramatica(std::vector<std::string> myvec){
+bool gramatica(std::vector<std::string> &myvec){
     return gram_start(myvec);
 }
 
 
 // BEGINNING Y END ESCRIBIRLA CON REGEX
-// BORRAR PRIMERO Y ULTIMO ELEMENTO DEL VECTOR ORIGINAL
-bool gram_start(std::vector<std::string> myvec){
+bool gram_start(std::vector<std::string> &myvec){
   if(myvec[0] == "BEGINNING-OF-PROGRAM" && myvec[myvec.size()-1] == "END-OF-PROGRAM"){
-    myvec.pop_back();
     std::vector<std::string> myvec2;
-    for(int i = 0; i < myvec.size(); i++)
+    for(int i = 1; i < myvec.size()-2; i++)
       myvec2.push_back(myvec[i]);
     myvec = myvec2;
     return true;
@@ -84,5 +81,3 @@ bool gram_start(std::vector<std::string> myvec){
     return false;
   }
 }
-
-
