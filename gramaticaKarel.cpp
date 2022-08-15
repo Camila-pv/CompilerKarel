@@ -6,9 +6,10 @@
 
 bool gramatica(std::vector<std::string> &myvec);
 bool gram_start(std::vector<std::string> &myvec);
+bool gram_program(std::vector<std::string> &myvec);
+//bool gram_definition(std::vector<std::string> &myvec);
+
 /**
-bool gram_program(std::vector<std::string> myvec);
-bool gram_definition(std::vector<std::string> myvec);
 bool gram_statement(std::vector<std::string> myvec);
 bool gram_block(std::vector<std::string> myvec);
 bool gram_iteration(std::vector<std::string> myvec);
@@ -65,15 +66,30 @@ int main(){
 }
 
 bool gramatica(std::vector<std::string> &myvec){
-    return gram_start(myvec);
+  return gram_start(myvec);
 }
 
 
-// BEGINNING Y END ESCRIBIRLA CON REGEX
+// ESPACION AL INICIO, AL FINAL Y EN EL MEDIO DE TODO EL CODIGO
 bool gram_start(std::vector<std::string> &myvec){
-  if(myvec[0] == "BEGINNING-OF-PROGRAM" && myvec[myvec.size()-1] == "END-OF-PROGRAM"){
-    std::vector<std::string> myvec2;
-    for(int i = 1; i < myvec.size()-2; i++)
+  std::vector<std::string> myvec2;
+  if(std::regex_match(myvec[0], std::regex("(BEGINNING-OF-PROGRAM)([\\s]*)")) && std::regex_match(myvec[myvec.size()-1],std::regex("(END-OF-PROGRAM)([\\s]*)"))){
+    for(int i = 1; i < myvec.size()-1; i++)
+      myvec2.push_back(myvec[i]);
+    myvec = myvec2;
+    return gram_program(myvec);
+  }else{
+    return false;
+  }
+}
+
+
+
+// TABULACION
+bool gram_program(std::vector<std::string> &myvec){
+  std::vector<std::string> myvec2;
+  if(std::regex_match(myvec[0], std::regex("([\\s]*)(BEGINNING−OF−EXECUTION)([\\s]*)")) && std::regex_match(myvec[myvec.size()-1],std::regex("([\\s]*)(END-OF-EXECUTION)([\\s]*)"))){
+    for(int i = 1; i < myvec.size()-1; i++)
       myvec2.push_back(myvec[i]);
     myvec = myvec2;
     return true;
@@ -81,3 +97,16 @@ bool gram_start(std::vector<std::string> &myvec){
     return false;
   }
 }
+
+
+
+
+
+
+
+/**
+bool gram_definition(std::vector<std::string> &myvec){
+  std::cout<<"Nueva funcion\n";
+  return true;
+}
+**/

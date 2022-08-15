@@ -1,6 +1,5 @@
 BEGINNING-OF-PROGRAM
-	ITERATE 3 hola TIMES
-	BEGIN-OF-EXECUTION
+	BEGINNING−OF−EXECUTION
 		turnleft;
 		move;
 		pickbeeper;
