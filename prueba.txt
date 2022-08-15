@@ -1,4 +1,6 @@
 BEGINNING-OF-PROGRAM
+	DEFINE-NEW-INSTRUCTION turnright AS
+	statement
 	BEGINNING−OF−EXECUTION
 		turnleft;
 		move;
