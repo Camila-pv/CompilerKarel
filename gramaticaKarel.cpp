@@ -8,6 +8,10 @@ bool gramatica(std::vector<std::string> &myvec);
 bool gram_start(std::vector<std::string> &myvec);
 bool gram_program(std::vector<std::string> &myvec);
 bool gram_definition(std::vector<std::string> &myvec);
+bool instruction(std::string instruc);
+bool condition(std::string comando);
+bool identifier(std::string identi);
+bool number(std::string n);
 
 /**
 bool gram_statement(std::vector<std::string> myvec);
@@ -15,29 +19,27 @@ bool gram_block(std::vector<std::string> myvec);
 bool gram_iteration(std::vector<std::string> myvec);
 bool gram_loop(std::vector<std::string> myvec);
 bool gram_conditional(std::vector<std::string> myvec);
-bool instruction(std::vector<std::string> myvec);
-
 **/
 /**
  GRAMATICA KAREL
  
- start → BEGINNING−OF−PROGRAM program END−OF−PROGRAM
- program → definition∗ BEGINNING−OF−EXECUTION statement∗ END−OF−EXECUTION
- definition → DEFINE−NEW−INSTRUCTION identifier AS statement 
+| start → BEGINNING−OF−PROGRAM program END−OF−PROGRAM
+| program → definition∗ BEGINNING−OF−EXECUTION statement∗ END−OF−EXECUTION
+| definition → DEFINE−NEW−INSTRUCTION identifier AS statement 
  statement → block | iteration | loop | conditional | instruction
  block → BEGIN statement∗ END 
  iteration → ITERATE number TIMES statement
  loop → WHILE condition DO statement
  conditional → IF condition THEN statement (ELSE statement)?
  instruction → TURNON | MOVE | TURNLEFT | PICKBEEPER | PUTBEEPER | TURNOFF | identifier 
- condition → FRONT−IS−CLEAR | FRONT−IS−BLOCKED | LEFT−IS−CLEAR | LEFT−IS−BLOCKED
+| condition → FRONT−IS−CLEAR | FRONT−IS−BLOCKED | LEFT−IS−CLEAR | LEFT−IS−BLOCKED
             | RIGHT−IS−CLEAR | RIGHT−IS−BLOCKED | BACK−IS−CLEAR | BACK−IS−BLOCKED
             | NEXT−TO−A−BEEPER | NOT−NEXT−TO−A−BEEPER | ANY−BEEPERS−IN−BEEPER−BAG
             | NO−BEEPERS−IN−BEEPER−BAG | FACING−NORTH | NOT−FACING−NORTH
             | FACING−SOUTH | NOT−FACING−SOUTH | FACING−EAST | NOT−FACING−EAST
             | FACING−WEST | NOT−FACING−WEST
- identifier → [ a−z ] ( [ a−z ] | [0−9]+ )∗
- number → [0−9]+
+| identifier → [ a−z ] ( [ a−z ] | [0−9]+ )∗
+| number → [0−9]+
 **/
 
 int main(){
@@ -62,6 +64,12 @@ int main(){
     std::cout << "Falso " << std::endl;
    for(int i = 0; i < myvec.size() ; i++)
      std::cout << myvec[i]<<" \n";
+
+   std::string w = "facing-south";
+   if(instruction(w))
+     std::cout<<"mmmm si\n";
+   else
+     std::cout<<"kk\n";
     return 0;
 }
 
@@ -115,10 +123,31 @@ bool gram_definition(std::vector<std::string> &myvec){
     for(int i = 1;i < myvec.size(); i++)
       myvec2.push_back(myvec[i]);
     myvec= myvec2;   
-    std::cout<<"Nueva funcioon\n";
   return true;
    
   }
   return false;
 }
 ///////////////////////////////////////////////////////////////////////////////////////
+bool instruction(std::string instruc){
+  if(std::regex_match(instruc,std::regec("([\\s]*)(turnon)([\\s]*)|([\\s]*)(move)([\\s]*)|([\\s]*)(turnleft)([\\s]*)|([\\s]*)(pickbeeper)([\\s]*)|([\\s]*)(putbeeper)([\\s]*)|([\\s]*)(turnoff)([\\s]*)|([\\s]*)(identifier)([\\s]*)"))
+}
+
+bool condition(std::string comando){
+  if(std::regex_match(comando,std::regex("([\\s]*)(next-to-a-beeper)|([\\s]*)(not-next-to-a-beeper)|([\\s]*)(facing-east)|([\\s]*)(not-facing-east)|([\\s]*)(facing-south)|([\\s]*)(not-facing-south)|([\\s]*)(facing-north)|([\\s]*)(not-facing-north)|([\\s]*)(facing-west)|([\\s]*)(not-facing-west)|([\\s]*)(front-is-clear)|([\\s]*)(front-is-blocked)|([\\s]*)(left-is-clear)|([\\s]*)(left-is-blocked)|([\\s]*)(right-is-clear)|([\\s]*)(right-is-blocked)|([\\s]*)(back-is-clear)|([\\s]*)(back-is-blocked)|([\\s]*)(any-beepers-in-beeper-bag)|([\\s]*)(no-beepers-in-beeper-bag)")))
+    return true;
+  return false;
+}
+
+bool identifier(std::string identi){
+  if(std::regex_match(identi, std::regex("([\\s]*)(([A-Za-z])|([0-9])|(_)|(-))*([\\s]*)")))
+    return true;
+  return false;
+}
+  
+
+bool number(std::string n){
+  if(std::regex_match(n, std::regex("([\\s]*)([0-9]+)([\\s]*)")))
+    return true;
+  return false;
+}
