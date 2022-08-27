@@ -65,7 +65,8 @@ int main(){
    for(int i = 0; i < myvec.size() ; i++)
      std::cout << myvec[i]<<" \n";
 
-   std::string w = "facing-south";
+   
+   std::string w = "putbeeper";
    if(instruction(w))
      std::cout<<"mmmm si\n";
    else
@@ -130,8 +131,11 @@ bool gram_definition(std::vector<std::string> &myvec){
 }
 ///////////////////////////////////////////////////////////////////////////////////////
 bool instruction(std::string instruc){
-  if(std::regex_match(instruc,std::regec("([\\s]*)(turnon)([\\s]*)|([\\s]*)(move)([\\s]*)|([\\s]*)(turnleft)([\\s]*)|([\\s]*)(pickbeeper)([\\s]*)|([\\s]*)(putbeeper)([\\s]*)|([\\s]*)(turnoff)([\\s]*)|([\\s]*)(identifier)([\\s]*)"))
-}
+  if(std::regex_match(instruc,std::regex("([\\s]*)(turnon)([\\s]*)|([\\s]*)(move)([\\s]*)|([\\s]*)(turnleft)([\\s]*)|([\\s]*)(pickbeeper)([\\s]*)|([\\s]*)(putbeeper)([\\s]*)|([\\s]*)(turnoff)([\\s]*)|([\\s]*)(identifier)([\\s]*)")))
+    return 1;
+  return 0;
+     }
+
 
 bool condition(std::string comando){
   if(std::regex_match(comando,std::regex("([\\s]*)(next-to-a-beeper)|([\\s]*)(not-next-to-a-beeper)|([\\s]*)(facing-east)|([\\s]*)(not-facing-east)|([\\s]*)(facing-south)|([\\s]*)(not-facing-south)|([\\s]*)(facing-north)|([\\s]*)(not-facing-north)|([\\s]*)(facing-west)|([\\s]*)(not-facing-west)|([\\s]*)(front-is-clear)|([\\s]*)(front-is-blocked)|([\\s]*)(left-is-clear)|([\\s]*)(left-is-blocked)|([\\s]*)(right-is-clear)|([\\s]*)(right-is-blocked)|([\\s]*)(back-is-clear)|([\\s]*)(back-is-blocked)|([\\s]*)(any-beepers-in-beeper-bag)|([\\s]*)(no-beepers-in-beeper-bag)")))
