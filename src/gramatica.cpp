@@ -3,10 +3,7 @@
 #include<vector>
 #include <regex>
 
-bool gram_S(std::string s);
-bool gram_A(std::string s);
-bool gram_E(std::string s);
-bool gramatica(std::string palabra);
+#include <gramatica.h>
 
 /**
 GRAMATICA

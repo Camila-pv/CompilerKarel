@@ -1,17 +1,11 @@
-#include<iostream>
-#include<regex>
-#include<string>
-#include<fstream>
-#include<vector>
+#include <iostream>
+#include <regex>
+#include <string>
+#include <fstream>
+#include <vector>
 
-bool gramatica(std::vector<std::string> &myvec);
-bool gram_start(std::vector<std::string> &myvec);
-bool gram_program(std::vector<std::string> &myvec);
-bool gram_definition(std::vector<std::string> &myvec);
-bool instruction(std::string instruc);
-bool condition(std::string comando);
-bool identifier(std::string identi);
-bool number(std::string n);
+#include <gramaticaKarel.h>
+
 
 /**
 bool gram_statement(std::vector<std::string> myvec);

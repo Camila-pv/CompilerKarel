@@ -1,3 +1,5 @@
+#include <karel1.h>
+
 // Función que clasifica cada lexema con un simbolo o un error
 void identifier(std::string s){
   //Se crea un mapa y apuntador del mismo, donde la llave es el simbolo y el valor es la expresión regular
