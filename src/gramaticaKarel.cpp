@@ -25,7 +25,7 @@ bool gram_conditional(std::vector<std::string> myvec);
  iteration → ITERATE number TIMES statement
  loop → WHILE condition DO statement
  conditional → IF condition THEN statement (ELSE statement)?
- instruction → TURNON | MOVE | TURNLEFT | PICKBEEPER | PUTBEEPER | TURNOFF | identifier 
+| instruction → TURNON | MOVE | TURNLEFT | PICKBEEPER | PUTBEEPER | TURNOFF | identifier 
 | condition → FRONT−IS−CLEAR | FRONT−IS−BLOCKED | LEFT−IS−CLEAR | LEFT−IS−BLOCKED
             | RIGHT−IS−CLEAR | RIGHT−IS−BLOCKED | BACK−IS−CLEAR | BACK−IS−BLOCKED
             | NEXT−TO−A−BEEPER | NOT−NEXT−TO−A−BEEPER | ANY−BEEPERS−IN−BEEPER−BAG
@@ -60,7 +60,7 @@ int main(){
      std::cout << myvec[i]<<" \n";
 
    
-   std::string w = "putbeeper";
+   std::string w = "     putbeeper";
    if(instruction(w))
      std::cout<<"mmmm si\n";
    else
@@ -125,10 +125,13 @@ bool gram_definition(std::vector<std::string> &myvec){
 }
 ///////////////////////////////////////////////////////////////////////////////////////
 bool instruction(std::string instruc){
-  if(std::regex_match(instruc,std::regex("([\\s]*)(turnon)([\\s]*)|([\\s]*)(move)([\\s]*)|([\\s]*)(turnleft)([\\s]*)|([\\s]*)(pickbeeper)([\\s]*)|([\\s]*)(putbeeper)([\\s]*)|([\\s]*)(turnoff)([\\s]*)|([\\s]*)(identifier)([\\s]*)")))
+  if(std::regex_match(instruc,std::regex("([\\s]*)(turnon)([\\s]*)|([\\s]*)(move)([\\s]*)|([\\s]*)(turnleft)([\\s]*)|([\\s]*)(pickbeeper)([\\s]*)|([\\s]*)(putbeeper)([\\s]*)|([\\s]*)(turnoff)([\\s]*)|([\\s]*)(identifier)([\\s]*)"))){
     return 1;
-  return 0;
-     }
+  }else{
+    return identifier(instruc);
+  }
+}
+
 
 
 bool condition(std::string comando){
