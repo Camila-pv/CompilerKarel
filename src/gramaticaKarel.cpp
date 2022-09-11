@@ -51,7 +51,9 @@ int main(){
       newfile.close();   //close the file object.
    }
 
-
+   for(int i = 0; i < myvec.size(); i++)
+     std::cout<< myvec[i]<<"\n";
+   /**
    if(gramatica(myvec))
     std::cout << "Verdadero " << std::endl;
   else
@@ -65,6 +67,7 @@ int main(){
      std::cout<<"mmmm si\n";
    else
      std::cout<<"kk\n";
+     **/
     return 0;
 }
 
@@ -124,6 +127,52 @@ bool gram_definition(std::vector<std::string> &myvec){
   return false;
 }
 ///////////////////////////////////////////////////////////////////////////////////////
+bool conditional(std::vector<std::string> &myvec){
+  
+  if(std::regex_match(myvec[0],std::regex("([\\s]*)(IF)([\\s]+)"))){
+    if(condition(myvec[1])){
+      if(std::regex_match(myvec[3],std::regex("([\\s]+)(THEN)([\\s]*)"))){
+	if(instruction(myvec[4]))
+	  return true;
+	else{
+	  if(std::regex_match(myvec[4],std::regex("([\\s]*)(BEGIN)([\\s]*)"))){
+	    int n = 5;
+	    while(instruction(myvec[n]))
+	      n++;
+	    if(std::regex_match(myvec[n],std::regex("([\\s]*)(END)([\\s]*)")))
+	      return true;
+	    return false;
+	  }
+	}
+      }
+    }
+  }
+  return false;
+}
+
+
+bool IF_Condition_THEN(std::syting s){
+  // Separar strings por esacios
+  vector palabras;
+
+  if(std::regex_match(myvec[0],std::regex("([\\s]*)(IF)([\\s]+)"))){
+    if(condition(myvec[1])){
+      if(std::regex_match(myvec[3],std::regex("([\\s]+)(THEN)([\\s]*)"))){
+
+      }
+    }
+  }
+
+}
+
+	    
+	      
+	    
+	    
+	   
+ 
+	
+		    
 bool instruction(std::string instruc){
   if(std::regex_match(instruc,std::regex("([\\s]*)(turnon)([\\s]*)|([\\s]*)(move)([\\s]*)|([\\s]*)(turnleft)([\\s]*)|([\\s]*)(pickbeeper)([\\s]*)|([\\s]*)(putbeeper)([\\s]*)|([\\s]*)(turnoff)([\\s]*)|([\\s]*)(identifier)([\\s]*)"))){
     return 1;

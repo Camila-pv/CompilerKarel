@@ -18,6 +18,7 @@ bool gramatica(std::vector<std::string> &myvec);
 bool gram_start(std::vector<std::string> &myvec);
 bool gram_program(std::vector<std::string> &myvec);
 bool gram_definition(std::vector<std::string> &myvec);
+bool conditional(std::vector<std::string> &myvec);
 bool instruction(std::string instruc);
 bool condition(std::string comando);
 bool identifier(std::string identi);

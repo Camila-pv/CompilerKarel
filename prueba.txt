@@ -1,6 +1,6 @@
 BEGINNING-OF-PROGRAM
-	DEFINE-NEW-INSTRUCTION turnright AS
-	statement
+	IF facing-north THEN
+		turnleft
 	BEGINNING−OF−EXECUTION
 		turnleft;
 		move;
